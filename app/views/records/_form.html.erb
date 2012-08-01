@@ -1,0 +1,13 @@
+<%= form_for :comments do |f|%>
+   <div class="name_field">
+     <h5>Name:</h5>
+ 	<%= f.text_field :name %>
+   </div>
+   <div class="comment_field">
+ 	<h5>Comment:</h5>
+     <%= f.text_area :body, :cols => 100, :rows =>5 %>
+   </div>
+   <div class="actions">
+     <%= f.submit %>
+   </div>
+<% end %>

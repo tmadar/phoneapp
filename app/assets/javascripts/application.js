@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
-
+$(function () {
+    $('.popover-comment').popover({ html : true });
+});
 

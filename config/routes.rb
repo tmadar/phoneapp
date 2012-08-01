@@ -8,26 +8,25 @@ Phoneapp::Application.routes.draw do
     end
   end
   
-
   get "home/index"
-  
-  get "record/index"
 
-  get "agent/index"
+  get "users/index"
   
-  get "record/index"
+  get "records/index"
 
   devise_for :users
   
-  resources :users
+  resources :records do
+    get :calls, :on => :member
+  end
   
-  resources :calls   
-  
-  resources :records
-  
-  resources :comments
+  resources :calls do
+    get :comments, :on => :member
+  end
   
   resources :systems
+  
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

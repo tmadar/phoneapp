@@ -29,13 +29,14 @@ class CallHandlersController < ApplicationController
   
   def leave_message
     @call = Call.where(:twilio_call_sid => params[:CallSid]).first
-    @call.update_attribute(:audio_message, params[:RecordingUrl]) if params[:RecordingDuration] and params[:RecordingDuration].length > 1
+    @call.update_attribute(:recording, params[:RecordingUrl]) if params[:RecordingDuration] and params[:RecordingDuration].length > 1
     
     respond_to do |format|
       format.html
       format.xml
     end
   end
+  
   
     
   

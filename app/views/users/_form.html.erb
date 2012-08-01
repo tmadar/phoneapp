@@ -1,0 +1,15 @@
+<div class="new_user">
+<%= form_for @users do |f|%>
+   <div class="name_field">
+     <h5>Name:</h5>
+ 	 <%= f.text_field :name %>
+   </div>
+   <div class="callback_field">
+ 	 <h5>Callback #:</h5>
+     <%= f.text_field :phone %>
+   </div>
+   <div class="actions">
+     <%= f.submit %>
+   </div>
+<% end %>
+</div>

@@ -12,5 +12,8 @@
  *= require_tree .
  */
 
-
-
+#sign_in, #forgot_pass, #sign_up, .new_comment, .new_user
+{
+	text-align: center;
+  margin: 0px auto;
+}

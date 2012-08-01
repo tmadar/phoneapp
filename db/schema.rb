@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726163118) do
+ActiveRecord::Schema.define(:version => 20120801181207) do
 
   create_table "agents", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -28,14 +28,18 @@ ActiveRecord::Schema.define(:version => 20120726163118) do
     t.string   "status"
     t.text     "last_comment"
     t.string   "recording"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "user_id"
+    t.string   "disposition",     :default => "Open"
   end
 
   create_table "comments", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "body",       :default => ""
+    t.string   "name",       :default => ""
+    t.integer  "call_id"
   end
 
   create_table "records", :force => true do |t|

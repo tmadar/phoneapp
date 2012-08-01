@@ -1,8 +1,11 @@
 class Call < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :caller, :received_at, :duration, :twilio_call_sid,
-                  :zendesk_id, :reschedule_time, :status, :comment, :audio_message
+                  :zendesk_id, :reschedule_time, :status, :comment, :recording,
+                  :disposition, :last_comment
+                  
   has_many :comments
+
   
   def self.received(params)
     if params and params[:Called]
@@ -23,6 +26,8 @@ class Call < ActiveRecord::Base
       call.received_at = twilio_call.start_time
       call.duration = twilio_call.duration
       call.status = twilio_call.status
+      call.last_comment = "test last comment"
+      call.recording = twilio_call.recordings.get(:RecordingUri).wav
       call.save
     end
   end
@@ -35,5 +40,16 @@ class Call < ActiveRecord::Base
       twilio_call.hangup
     end
     update_incomplete
-  end  
+  end
+  
+  def view_comments
+    calls = Call.all
+    comments = Comment.all
+    calls.each do |call|
+      comments.each do |comment|
+        call.comment << comment.body
+      end
+    end
+  end
+   
 end
