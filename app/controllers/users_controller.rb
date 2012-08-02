@@ -7,13 +7,19 @@ class UsersController < ApplicationController
     end
   end
   
-  def new
-    @users = User.all
+  def edit
+    @user = User.find(params[:id])
     respond_to do |format|
-      format.html
+        format.html
     end
   end
-
-  def dashboard
+  
+  def update
+    @user = User.find(params[:id])
+    respond_to do |format|
+      @user.update_attributes(params[:user])
+        format.html { redirect_to users_path()}
+    end
   end
+    
 end

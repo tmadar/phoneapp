@@ -21,7 +21,7 @@ Phoneapp::Application.routes.draw do
   end
   
   resources :calls do
-    get :comments, :on => :member
+    resources :comments
   end
   
   resources :systems

@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
   
   def create
-    @comment = Comment.new(params[:comment])
+    @call = Call.find(params[:call_id])
+   #@comment = Comment.new(params[:comment])
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to records_path()}
+        format.html { redirect_to users_path()}
       end
     end
   end

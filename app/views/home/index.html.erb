@@ -22,14 +22,14 @@
 	<br>
 	<br>
 	<br>
-	<% @calls.each do |call| %>
+	<% @calls.reverse.each do |call| %>
 		<table class="table table-striped table-bordered table-condensed">
 			<tr>
-				<th>Time:</th>
-				<th>Duration:</th>
-				<th>Callback #:</th>
-				<th>Call Status:</th>
-				<th>Disposition:</th>
+				<th style="width: 30%">Time:</th>
+				<th style="width: 10%">Duration:</th>
+				<th style="width: 30%">Callback #:</th>
+				<th style="width: 10%">Call Status:</th>
+				<th style="width: 20%">Disposition:</th>
 			</tr>
 			<tr>
 				<td><%= call.received_at %></td>

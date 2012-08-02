@@ -4,7 +4,7 @@ class Call < ActiveRecord::Base
                   :zendesk_id, :reschedule_time, :status, :comment, :recording,
                   :disposition, :last_comment
                   
-  has_many :comments
+  has_many :comments, :autosave => true, :dependent => :destroy
 
   
   def self.received(params)

@@ -1,9 +1,30 @@
-<p>
-  <b>Commenter:</b>
-  <%= comment.commenter %>
+<!-- <p>
+  <b>Name:</b>
+  <%= comment.name %>
 </p>
  
 <p>
   <b>Comment:</b>
   <%= comment.body %>
 </p>
+
+
+<p>
+  <b>Time:</b>
+  <%= comment.created_at %>
+</p> -->
+
+<table class="table table-bordered">
+	<tr>
+		<th>Commented By:</th>
+		<td><%= comment.name %></td>
+	</tr>
+	<tr>
+		<th>Comment:</th>
+		<td><%= comment.body %></td>
+	</tr>
+	<tr>
+		<th>Time:</th>
+		<td><%= comment.created_at %></td>
+	</tr>
+</table>
