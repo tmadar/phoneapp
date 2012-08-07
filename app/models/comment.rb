@@ -3,6 +3,7 @@ class Comment < ActiveRecord::Base
   
   attr_accessible :body, :name
   belongs_to :call
+  after_save :update_last_comment
   
   def index
     @comments = Comment.all
@@ -11,6 +12,10 @@ class Comment < ActiveRecord::Base
     end
   end
   
-  
+  def update_last_comment
+    if self.call
+      self.call.update_attribute(:last_comment, self.body)
+    end
+  end
   
 end

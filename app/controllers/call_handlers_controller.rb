@@ -37,7 +37,14 @@ class CallHandlersController < ApplicationController
     end
   end
   
-  
-    
+  def agent_information
+    @call = Call.where(:twilio_call_sid => params[:CallSid]).first
+    @call.user.toggle_availability! if params[:Digits] == "1"
+      
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
   
 end

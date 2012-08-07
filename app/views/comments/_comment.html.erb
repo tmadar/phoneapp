@@ -1,23 +1,7 @@
-<!-- <p>
-  <b>Name:</b>
-  <%= comment.name %>
-</p>
- 
-<p>
-  <b>Comment:</b>
-  <%= comment.body %>
-</p>
-
-
-<p>
-  <b>Time:</b>
-  <%= comment.created_at %>
-</p> -->
-
-<table class="table table-bordered">
+<table class="table table-bordered table-striped" id="comment_<%= comment.id %>" <% if @comment and @call and comment.id == @call.comments.last.id %>style="display: none;"<% end %>>
 	<tr>
-		<th>Commented By:</th>
-		<td><%= comment.name %></td>
+		<th style="width: 30%">Commented By:</th>
+		<td style="width: 70%"> <%= current_user.email %></td>
 	</tr>
 	<tr>
 		<th>Comment:</th>

@@ -1,0 +1,62 @@
+<!-- <div class="content">
+	<h1>Call Record</h1>
+	<br>
+	<%= link_to "Go Back", root_path %>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<table class="table table-bordered table-condensed table-striped">
+		<tr>
+			<th>Time of Call</th>
+			<td><%= @call_record.received_at %></td>
+		</tr>
+		<tr>
+			<th>Callback #</th>
+			<td><%= @call_record.caller %></td>
+		</tr>
+		<tr>
+			<th>Duration</th>
+			<td><%= @call_record.duration %></td>
+		</tr>
+		<tr>
+			<th>Call Status</th>
+			<td><%= @call_record.status %></td>
+		</tr>
+		<tr>
+			<th>Disposition</th>
+			<td><%= @call_record.disposition %></td>
+		</tr>
+		<tr>
+			<th>Reschedule Time</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Audio Message</th>
+			<td>
+				<% if @call_record.recording %>
+					<%= link_to "Link", @call_record.recording %>
+				<% else %>
+					No Messages
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<th>Zendesk Ticket</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Last Comment</th>
+			<td><%= @call_record.last_comment %></td>
+		</tr>
+	</table>
+	
+	<h2>Comments</h2>
+	<%= render @call_record.comments %>
+	
+	<div class="new_comment">
+		<h2>Add a Comment</h2>
+		<%= render 'form' %>
+	</div>
+</div> -->

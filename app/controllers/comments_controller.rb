@@ -2,27 +2,35 @@ class CommentsController < ApplicationController
   
   def create
     @call = Call.find(params[:call_id])
-   #@comment = Comment.new(params[:comment])
+    @comment = @call.comments.create(params[:comment])
     respond_to do |format|
-      if @comment.save
-        format.html { redirect_to users_path()}
-      end
+      format.html { redirect_to call_path(@call) }
+      format.js
     end
   end
 
-    def destroy
-      @record = Record.find(params[:record_id])
-      @comment = @record.comments.find(params[:id])
-      @comment.destroy
-    end
-  
-    def new
-      @comment = Comment.new
+  def destroy
+    @call = Call.find(params[:call_id])
+    @comment = @call.comments.find(params[:id])
+    @comment.destroy
+  end
 
-      respond_to do |format|
-        format.html  # new.html.erb
-        format.json  { render :json => @comment }
-      end
+  def new
+    @comment = Comment.new
+
+    respond_to do |format|
+      format.html  # new.html.erb
+      format.json  { render :json => @comment }
     end
+  end
+  
+  def update
+    @call_record = Call.find(params[:id])
+    @call_record.update_attributes(params[:comment])
+    
+    respond_to do |format|
+      format.html
+    end
+  end
     
 end

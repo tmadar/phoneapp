@@ -1,0 +1,5 @@
+update_calls:
+  cron: "* * * * *"
+  class: UpdateCalls
+  queue: call_status_queue
+  description: "This job updates call data into ActiveRecord"

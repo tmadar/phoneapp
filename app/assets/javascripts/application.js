@@ -17,4 +17,3 @@
 $(function () {
     $('.popover-comment').popover({ html : true });
 });
-

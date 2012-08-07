@@ -3,7 +3,7 @@
 		<div class="container">
 			<ul class="nav">
 				<li>
-					<%= link_to "Home", home_index_path, :method => :get%>
+					<%= link_to "Home", home_path, :method => :get%>
 				</li>
 				<li class="active">
 					<%= link_to "Agent Settings", users_index_path, :method => :get%></a>
@@ -18,39 +18,61 @@
 
 <div class="content">
 	<h1>Agent Settings</h1>
-	<br>
-	<br>
-	<br>
-	
-	<% @users.each do |user|%>
-	<table class="table table-striped table-bordered table-condensed">
+	<% @users.sort! {|a,b| a.priority <=> b.priority}%>
+	<table class="table table-striped table-bordered table-condensed call-padded">
+
 		<tr>
-			<th style="width: 10%">Name:</th>
-			<th style="width: 30%">Callback #:</th>
-			<th style="width: 30%">Email:</th>
-			<th style="width: 15%">Means of Contact:</th>
-			<th style="width: 15%">Available:</th>
+			<th style="width: 10%">Name</th>
+			<th style="width: 30%">Callback #</th>
+			<th style="width: 30%">Email</th>
+			<th style="width: 7%">Means of Contact</th>
+			<th style="width: 7%">Available</th>
+			<th style="width: 8%">Priority</th>
+			<th style="width: 8%">Edit Agent</th>
 		</tr>
+		<% @users.each do |user|%>
 		<tr>
+
 			<td><%= user.name %></td>
 			<td><%= user.phone %></td>
 			<td><%= user.email %></td>
 			<td>
-				<select name="means_of_contact">
-					<option value="Phone">Phone</option>
-					<option value="Text">Text</option>
-				</select>
+				<ul class="nav nav-pills">
+				  <li class="dropdown" id="#menu_call_<%= user.id %>">
+					
+				    <a id="user_<%= user.id %>_contact" class="dropdown-toggle" data-toggle="dropdown" href="#menu_user_<%= user.id %>">
+				      <%= user.means_of_contact %>
+				      <b class="caret"></b>
+				    </a>
+				    <ul class="dropdown-menu">
+						<% User::CONTACT.each do |contact| %>
+				      <li><%= link_to_function "#{contact}", "updateContactOfAgent(#{user.id}, '#{escape_javascript(contact)}')" %></li>
+						<% end %>
+				    </ul>
+				  </li>
+				</ul>
 			</td>
 			<td>
-				<select name="availability">
-					<option value="Yes">Open</option>
-					<option value="No">No</option>
-				</select>
+				<ul class="nav nav-pills">
+				  <li class="dropdown" id="#menu_call_<%= user.id %>">
+					
+				    <a id="user_<%= user.id %>available" class="dropdown-toggle" data-toggle="dropdown" href="#menu_user_<%= user.id %>">
+				      <%= user.availability %>
+				      <b class="caret"></b>
+				    </a>
+				    <ul class="dropdown-menu">
+						<% User::AVAILABILITY.each do |available| %>
+				      <li><%= link_to_function "#{available}", "updateAvailabilityOfAgent(#{user.id}, '#{escape_javascript(available)}')" %></li>
+						<% end %>
+				    </ul>
+				  </li>
+				</ul>
 			</td>
+			<td><%= user.priority %></td>
+			<div class="btn-group">
+			<td><%= link_to "Edit", edit_user_path(:id => user.id), :class => "btn"%></td>
+			</div>
 		</tr>
-	</table>
-	<%= link_to "Edit Agent", edit_user_path(:id => user.id) %>
-	<% end %>
-	
-	
+		<% end %>
+	</table>	
 </div>

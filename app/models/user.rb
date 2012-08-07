@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   include CanCan::Ability
   
+  AVAILABILITY = ["Yes", "No"]
+  CONTACT = ["Phone", "Text"]
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -13,6 +16,20 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   
 
-      
+  def toggle_availability!
+    if not self.available?
+      self.availability = "Yes"
+    else
+      self.availability = "No"
+    end
+    self.save
+  end
+  
+  def available?
+    if self.availability != "Yes"
+      return false
+    end
+    return true
+  end
   
 end

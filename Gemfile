@@ -47,5 +47,5 @@ gem 'bootstrap-sass'
 gem 'bootstrap-form'
 gem 'cancan'
 gem 'will_paginate', '~> 3.0'
-
-#gem 'zendesk-api'
+gem 'will_paginate-bootstrap'
+gem 'zendesk_api'

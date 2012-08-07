@@ -5,10 +5,11 @@ Phoneapp::Application.routes.draw do
       get 'update_number'
       get 'conference_queue'
       get 'leave_message'
+      get 'agent_information'
     end
   end
   
-  get "home/index"
+  get "home", :to => "home#index"
 
   get "users/index"
   
