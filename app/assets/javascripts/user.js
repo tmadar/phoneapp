@@ -23,3 +23,17 @@ function updateAvailabilityOfAgent(user_id, new_state) {
 		}
 	});
 }
+
+$(function() {
+	$('*[data-modal]').click(function(e) {
+   	e.preventDefault();
+    var href = $(e.target).attr('href');
+    if (href.indexOf('#') == 0) {
+    	$(href).modal('hide');
+    } else {
+    	$.get(href, function(data) {
+      	$('<div class="modal">' + data + '</div>').modal('hide').appendTo('body');
+      });
+    }
+  });
+});

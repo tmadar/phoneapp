@@ -1,4 +1,4 @@
-<%= form_for([@call, @call.comments.build], :remote => true) do |f|%>
+<%= form_for([call, call.comments.build], :remote => true) do |f|%>
    <div class="name_field">
      <h5>Name:</h5>
  	<%= current_user.email %>

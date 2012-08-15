@@ -1,0 +1,75 @@
+<div id="show">
+	
+	<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+	<table class="table table-bordered table-condensed table-striped call-padded">
+		<h3>Call Information (#<%= call.id %>)</h3>
+  </div>
+  <div class="modal-body">
+	
+		<tr>
+			<td class="category">Call ID #</td>
+			<td><%= call.id %></td>
+		</tr>
+		<tr>
+			<td class="category">Time of Call</td>
+			<td><%= call.received_at %></td>
+		</tr>
+		<tr>
+			<td class="category">Callback #</td>
+			<td><%= call.caller %></td>
+		</tr>
+		<tr>
+			<td class="category">Duration</td>
+			<td><%= "#{call.duration} seconds" %></td>
+		</tr>
+		<tr>
+			<td class="category">Call Status</td>
+			<td><%= call.status %></td>
+		</tr>
+		<tr>
+			<td class="category">Disposition</td>
+			<td><%= call.disposition %></td>
+		</tr>
+		<tr>
+			<td class="category">Assigned To</td>
+			<td><%= call.assign_agent(call.user_id) %></td>
+		</tr>
+		<tr>
+			<td class="category">Reschedule Time</td>
+			<td>
+				<%= render 'time', :call => call %>
+			</td>
+		</tr>
+		<tr>
+			<td class="category">Audio Message</td>
+			<td>
+				<%= call.check_recording(call)%>
+			</td>
+		</tr>
+		<tr>
+			<td class="category">Zendesk Ticket</td>
+			<td>
+				<%= link_to "Zendesk Ticket", call.zendesk_call_string(call.zendesk_id)%>
+			</td>
+		</tr>
+		<tr>
+			<td class="category">Last Comment</td>
+			<td><%= call.last_comment%></td>
+		</tr>
+	</table>
+	
+	<div id="comments">
+		<%= render 'comments', :call => call %>
+	</div>
+	<div class="new_comment">
+		<h2>Add a Comment</h2>
+			<%= render 'form', :call => call %>
+	</div>
+	
+	<div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+  </div>
+
+</div>
+</div>

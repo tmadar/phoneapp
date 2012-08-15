@@ -1,62 +1,83 @@
-<!-- <div class="content">
-	<h1>Call Record</h1>
-	<br>
-	<%= link_to "Go Back", root_path %>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<table class="table table-bordered table-condensed table-striped">
-		<tr>
-			<th>Time of Call</th>
-			<td><%= @call_record.received_at %></td>
-		</tr>
-		<tr>
-			<th>Callback #</th>
-			<td><%= @call_record.caller %></td>
-		</tr>
-		<tr>
-			<th>Duration</th>
-			<td><%= @call_record.duration %></td>
-		</tr>
-		<tr>
-			<th>Call Status</th>
-			<td><%= @call_record.status %></td>
-		</tr>
-		<tr>
-			<th>Disposition</th>
-			<td><%= @call_record.disposition %></td>
-		</tr>
-		<tr>
-			<th>Reschedule Time</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>Audio Message</th>
-			<td>
-				<% if @call_record.recording %>
-					<%= link_to "Link", @call_record.recording %>
-				<% else %>
-					No Messages
-				<% end %>
-			</td>
-		</tr>
-		<tr>
-			<th>Zendesk Ticket</th>
-			<td></td>
-		</tr>
-		<tr>
-			<th>Last Comment</th>
-			<td><%= @call_record.last_comment %></td>
-		</tr>
-	</table>
-	
-	<h2>Comments</h2>
-	<%= render @call_record.comments %>
-	
-	<div class="new_comment">
-		<h2>Add a Comment</h2>
-		<%= render 'form' %>
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<p>Logged in as <%= "#{current_user.email}"%></p>
+				<li>
+					<%= link_to "Home", home_path, :method => :get%>
+				</li>
+				<li class="active">
+					<%= link_to "Call Archive", calls_path, :method => :get%></a>
+				</li>
+				<li>
+					<%= link_to "Agent Settings", users_index_path, :method => :get%></a>
+				</li>
+				<li>
+					<%= link_to "Log Out", destroy_user_session_url, :method => :delete %>
+				</li>
+			</ul>
+		</div>
 	</div>
-</div> -->
+</div>
+
+<div class="content">
+	
+	<table class="table table-striped table-bordered table-condensed call-padded">
+		<h1>Call Archives</h1>
+		<tr>
+			<th style="width: 5%">Call ID #</th>
+			<th style="width: 15%">Time</th>
+			<th style="width: 10%">Duration</th>
+			<th style="width: 15%">Callback #</th>
+			<th style="width: 10%">Call Status</th>
+			<th style="width: 7%">Disposition</th>
+			<th style="width: 10%">View Call Info</th>
+			<th style="width: 10%">Assigned To</th>			
+		</tr>		
+	 <% @calls.each do |call| %>
+			<tr id="call_<%= call.id %>">
+				<td class="call_table"><%= call.id %></td>
+				<td class="call_table"><%= call.received_at.localtime.strftime("%d-%b-%Y %I:%M %P") %></td>
+				<td class="call_table"><%= "#{call.duration} seconds" %></td>
+				<td class="call_table"><%= call.caller %></td>
+				<td class="call_table"><%= call.status %></td>
+				<td>					
+					<ul class="nav nav-pills">
+					  <li class="dropdown" id="#menu_call_<%= call.id %>">	
+					    <a id="call_<%= call.id %>_disposition" class="dropdown-toggle" data-toggle="dropdown" href="#menu_call_<%= call.id %>">
+					      <%= call.disposition %>
+					      <b class="caret"></b>
+					    </a>
+					    <ul class="dropdown-menu">
+							<% Call::DISPOSITIONS.each do |disposition| %>
+					      <li><%= link_to_function "#{disposition}", "updateStateOfCall(#{call.id}, '#{escape_javascript(disposition)}')" %></li>
+							<% end %>
+					    </ul>
+					  </li>
+					</ul>	
+				</td>
+				<td class="call_table">
+					<%= link_to "View", call_path(call), { "remote" => true} %>			
+				</td>
+				<td>
+					<ul class="nav nav-pills">
+						<li class="dropdown" id="#menu_call_<%= call.id %>">
+							<a id="call_<%= call.id %>_assignment" class="dropdown-toggle" data-toggle="dropdown" href="#menu_call_<%= call.id %>">
+						      <%= call.assign_agent(call.user_id) %>
+						      <b class="caret"></b>
+						    </a>
+						    <ul class="dropdown-menu">
+								<% @users.each do |user| %>
+									<li><%= link_to_function "#{user.name}", "updateAssignmentOfCall(#{call.id}, '#{user.id}')" %></li>
+								<% end %>
+						    </ul>
+					  	</li>
+					</ul>
+				</td>
+			</tr>
+			<% end %>
+	</table>
+<%= will_paginate(@calls, :renderer => BootstrapPagination::Rails)%>	
+</div>
+
+<%= render 'home/call_modal' %>

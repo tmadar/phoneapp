@@ -1,9 +1,12 @@
 xml.instruct!
 xml.Response do
   if params[:RecordingDuration]
-    xml.Say "We have successfully saved your message. A representative will get back to you. Thank you. Please wait if you wish to speak to a representative."
-    xml.Redirect({:method => "GET"}, conference_queue_call_handler_url(:format => :xml)) 
+    xml.Say "We have successfully saved your message. A representative will get back to you. Thank you. Goodbye."
+   # xml.Redirect({:method => "GET"}, conference_queue_call_handler_url(:format => :xml)) 
   else
+    if params[:sorry]
+      xml.Say "Sorry, we could not reach an agent at this time."
+    end
     xml.Say "Please re cord your message now followed by the pound key"
     xml.Record({:timeout => "20", :action => leave_message_call_handler_url(:format => :xml), :finishOnKey => "#", :method => "GET"}) do
     end

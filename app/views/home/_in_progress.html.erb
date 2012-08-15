@@ -1,0 +1,9 @@
+<table class="table table-bordered table-striped" id="inProgressTable">
+	<% in_progress_calls.each do |calling| %>
+	<h3>Call In Progress</h3>
+	<tr>
+		<th>Callback #</th>
+		<td><%= calling.caller %></td>
+	</tr>
+	<% end %>
+</table>

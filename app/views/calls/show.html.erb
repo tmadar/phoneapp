@@ -1,9 +1,12 @@
-<div class="content">
-	<h1>Call Record</h1>
+<div class="content" id="showCall">
+		<h3>Call Record</h3>
 
-	<%= link_to "Go Back", root_path %>
 
 	<table class="table table-bordered table-condensed table-striped call-padded">
+		<tr>
+			<th>Call ID #</th>
+			<td><%= @call.id %></td>
+		</tr>
 		<tr>
 			<th>Time of Call</th>
 			<td><%= @call.received_at %></td>
@@ -14,7 +17,7 @@
 		</tr>
 		<tr>
 			<th>Duration</th>
-			<td><%= @call.duration %></td>
+			<td><%= "#{@call.duration} seconds" %></td>
 		</tr>
 		<tr>
 			<th>Call Status</th>
@@ -25,22 +28,30 @@
 			<td><%= @call.disposition %></td>
 		</tr>
 		<tr>
+			<th>Assigned To</th>
+			<td><%= @call.assign_agent(@call.user_id) %></td>
+		</tr>
+		<tr>
 			<th>Reschedule Time</th>
-			<td></td>
+			<td>
+				<%= render 'time', :call => @call %>
+			</td>
 		</tr>
 		<tr>
 			<th>Audio Message</th>
 			<td>
-				<% if @call.recording  != nil then%>
+				<% if @call.recording  != nil %>
 					<%= link_to "Link", @call.recording %>
 				<% else %>
-					No Messages
+					No Message
 				<% end %>
 			</td>
 		</tr>
 		<tr>
 			<th>Zendesk Ticket</th>
-			<td></td>
+			<td>
+				<%= link_to "Zendesk Ticket", @call.zendesk_call_string(@call.zendesk_id)%>
+			</td>
 		</tr>
 		<tr>
 			<th>Last Comment</th>
@@ -49,10 +60,10 @@
 	</table>
 	
 	<div id="comments">
-		<%= render 'comments'%>
+		<%= render 'comments', :call => @call %>
 	</div>
 	<div class="new_comment">
 		<h2>Add a Comment</h2>
-		<%= render 'form' %>
+		<%= render 'form', :call => @call %>
 	</div>
 </div>

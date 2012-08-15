@@ -1,0 +1,4 @@
+<%= form_for(call, :html => { :class => "form-search well" }, :remote => true) do |f|%>
+ 	<%= f.text_field :rescheduled_to, { :placeholder => "Enter a time here", :class => "input-medium search-query" } %>
+  <%= f.submit "Reschedule", { :class => "btn" } %>
+<% end %>

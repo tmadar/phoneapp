@@ -2,8 +2,12 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<ul class="nav">
+				<p>Logged in as <%= "#{current_user.email}"%></p>
 				<li>
 					<%= link_to "Home", home_path, :method => :get%>
+				</li>
+				<li>
+					<%= link_to "Call Archive", calls_path, :method => :get%></a>
 				</li>
 				<li class="active">
 					<%= link_to "Agent Settings", users_index_path, :method => :get%></a>
@@ -16,9 +20,10 @@
 	</div>
 </div>
 
+<div class="agent_settings">
+	
 <div class="content">
 	<h1>Agent Settings</h1>
-	<% @users.sort! {|a,b| a.priority <=> b.priority}%>
 	<table class="table table-striped table-bordered table-condensed call-padded">
 
 		<tr>
@@ -33,9 +38,9 @@
 		<% @users.each do |user|%>
 		<tr>
 
-			<td><%= user.name %></td>
-			<td><%= user.phone %></td>
-			<td><%= user.email %></td>
+			<td class="agent_table"><%= user.name %></td>
+			<td class="agent_table"><%= user.phone %></td>
+			<td class="agent_table"><%= user.email %></td>
 			<td>
 				<ul class="nav nav-pills">
 				  <li class="dropdown" id="#menu_call_<%= user.id %>">
@@ -68,11 +73,15 @@
 				  </li>
 				</ul>
 			</td>
-			<td><%= user.priority %></td>
-			<div class="btn-group">
-			<td><%= link_to "Edit", edit_user_path(:id => user.id), :class => "btn"%></td>
-			</div>
+			<td class="agent_table"><%= user.priority %></td>
+			<td class="agent_table">
+			<%= link_to "View", user_path(user), { :remote => true } %>
+			</td>
 		</tr>
 		<% end %>
 	</table>	
 </div>
+
+</div>
+
+<%= render 'edit_modal' %>

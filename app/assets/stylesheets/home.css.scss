@@ -1,7 +1,6 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 .content {
   padding: 20px;
 	text-align: center;
@@ -12,16 +11,40 @@
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
+	.table
+	{
+		th, td, tr
+		{
+			text-align: center;
+		}
+		
+		td
+		{
+			.info
+			{
+				padding-top: 40px;
+			}
+		}
+		
+		
+	}
+	
+	h1
+	{
+		font-weight: bold;
+	}
+	
+	.call_table
+	{
+		padding-top: 12px;
+	}
+	
+	
+
 }
 
-td tr th
-{
-	text-align: center;
-	margin: 0 auto; 
-}
 
 .call-padded, .agent_activity{
 	margin-top: 50px;
 	margin-bottom: 30px;
 }
-

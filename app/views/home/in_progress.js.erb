@@ -1,0 +1,6 @@
+$("#inprogress").html(<%= escape_javscript(render('in_progress.html', :in_progress_calls => @in_progress_calls)) %>);
+<% if @in_progress_calls.empty? %>
+$("#inprogress").hide();
+<% else %>
+$("#inprogress").show();
+<% end %>

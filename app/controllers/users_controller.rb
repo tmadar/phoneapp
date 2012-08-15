@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
  
   def index
     @users = User.all
@@ -13,15 +14,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
         format.html
+        format.js
     end
   end
   
   def show
-    @user = User.where(:id => params[:id]).first
+    @user = User.find(params[:id])
     respond_to do |format|
-      format.html {redirect_to users_url}
-      # format.xml { render :xml => @user }
-      # format.json { render :json => @user }
+      format.html
+      format.js
     end
   end
   
@@ -29,15 +30,11 @@ class UsersController < ApplicationController
   # PUT /calls/1.json
   def update
     @user = User.find(params[:id])
-
+    @user.update_attributes(params[:user])
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+        format.html
+        format.js
+        format.json  { render :json => @users }
     end
   end
     

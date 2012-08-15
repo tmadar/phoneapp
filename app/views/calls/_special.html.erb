@@ -1,0 +1,5 @@
+<% @calls.each do |call| %>
+<div class="modal hide fade" id="callModal_<%= call.id %>">
+	<%= render 'modal', :call => call %>
+</div>
+<% end %>

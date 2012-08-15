@@ -1,23 +1,13 @@
-<div class="new_user">
-<%= form_for(@user) do |f|%>
-   <div class="name_field">
-     <h5>Name:</h5>
- 	 <%= f.text_field :name %>
-   </div>
-   <div class="callback_field">
- 	 <h5>Callback #:</h5>
-     <%= f.text_field :phone %>
-   </div>
-   <div class="email_field">
- 	 <h5>Email:</h5>
-     <%= f.text_field :email %>
-   </div>
-   <div class="priority_field">
- 	 <h5>Priority:</h5>
-     <%= f.text_field :priority %>
-   </div>
-   <div class="actions">
-     <%= f.submit %>
-   </div>
+<%= form_for(@user,:html => { :class => "form-search well" }, :remote => true) do |f|%>
+	<h5>Name:</h5>
+	<%= f.text_field :name %>
+	<h5>Callback #:</h5>
+	<%= f.text_field :phone %>
+	<h5>Email:</h5>
+	<%= f.text_field :email %>
+	<h5>Priority:</h5>
+	<%= f.text_field :priority, :class => "span1" %>
+	<div class="update_user">
+		<%= f.submit %>
+	</div>
 <% end %>
-</div>

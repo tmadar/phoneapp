@@ -1,16 +1,12 @@
 class CallsController < ApplicationController
+  before_filter :authenticate_user!
   
   def index
-    @calls = Call.all
+    @calls = Call.paginate page: params[:page], order: 'created_at desc', per_page: 10
+    @users = User.where("name is not null")
     respond_to do |format|
       format.html
       format.xml { render 'index.xml.builder' }
-    end
-  end
-  
-  def conference_michael
-    respond_to do |format|
-      format.xml { render 'conference_michael.xml.builder' }
     end
   end
   
@@ -20,6 +16,7 @@ class CallsController < ApplicationController
       format.html
       format.xml { render :xml => @call }
       format.json { render :json => @call }
+      format.js
     end
   end
   
@@ -27,16 +24,21 @@ class CallsController < ApplicationController
   # PUT /calls/1.json
   def update
     @call = Call.find(params[:id])
-
+    @call.update_attributes(params[:call])
     respond_to do |format|
-      if @call.update_attributes(params[:call])
-        format.html { redirect_to @call, notice: 'Call was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @call.errors, status: :unprocessable_entity }
-      end
+        format.html
+        format.json { render :json => @call }
+        format.js
     end
   end
   
+  def in_progress
+    @calls = Call.in_progress
+    respond_to do |format|
+      format.json { render :json => @calls }
+      format.xml { render :xml => @calls }
+      format.js
+    end
+  end
+    
 end

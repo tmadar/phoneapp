@@ -14,6 +14,32 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+var refreshTimer;
+
 $(function () {
     $('.popover-comment').popover({ html : true });
 });
+
+
+function checkActivity() {
+	$.getJSON('/calls/in_progress.json', function(data) {
+		var items = [];
+		
+		$.each(data, function(key, value) {
+			items.push("<tr id='inProgressRow_" + value.id +"'><td class=\"bolded\">Callback #</td>" + 
+				"<td>" + value.caller + "</td>");
+		});
+				
+		$("#inprogress").html("<h3>Call In Progress</h3>" +
+			"<table class=\"table table-bordered table-striped\" id=\"inProgressTable\">" +
+			items.join('') + "</table>");
+	
+		if ($(items).size() == 0) {
+			$("#inprogress").hide();		
+		}
+		else {
+			$("#inprogress").show();
+		}
+	});
+}

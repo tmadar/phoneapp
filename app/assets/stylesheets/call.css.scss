@@ -3,3 +3,48 @@
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
+
+.time
+{
+	padding-top: 25px;
+
+	.time_field, .actions
+	{
+		display: inline;
+		padding: 20px;
+	}
+}
+
+.call_archives
+{
+	padding-top: 100px;
+}
+
+.category
+{
+	font-weight: bold;
+}
+
+#show
+{
+	max-height: 600px;
+	
+	.new_comment
+	{
+		padding-bottom:15px;
+	}
+}
+
+.comment_header
+{
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.table
+{
+	.call_table
+	{
+		padding-top: 12px;
+	}
+}

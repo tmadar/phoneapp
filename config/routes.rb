@@ -5,7 +5,10 @@ Phoneapp::Application.routes.draw do
       get 'update_number'
       get 'conference_queue'
       get 'leave_message'
+      post 'leave_message'
       get 'agent_information'
+      get 'patch_agent'
+      get 'unlock_agent'
     end
   end
   
@@ -14,20 +17,28 @@ Phoneapp::Application.routes.draw do
   get "users/index"
   
   get "records/index"
+  
+  get "calls/index"
 
   devise_for :users
   
-  resources :records do
-    get :calls, :on => :member
-  end
+  # resources :records do
+  #   get :calls, :on => :member
+  # end
   
   resources :calls do
+    collection do
+      get 'in_progress'
+    end
+    
     resources :comments
   end
   
   resources :systems
   
   resources :users
+  
+  resources :zendesk_tickets
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
