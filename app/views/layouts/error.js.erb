@@ -1,0 +1,4 @@
+<% if flash[:alert] %>
+$("#main #error-alert").detach();
+$("#main").prepend("<%=j render 'layouts/error' %>");
+<% end %>

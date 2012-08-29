@@ -1,0 +1,2 @@
+class ZendeskTicketExport < ZendeskTicket 
+end

@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+
 .call-padded {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -23,4 +25,53 @@
 	{
 		padding-top: 12px;
 	}
+}
+
+.span
+{
+	padding-right:5px;
+}
+
+.user-settings
+{
+	margin-top: 46px;
+}
+
+.user_available span
+{
+	
+}
+
+tr.user_row {
+	margin: 0 auto;
+	padding: 0;
+}
+
+tr.user-row td span.padded-user-column {
+	line-height: 30px;
+}
+
+tr.user-row td input {
+	width: 90%;
+	margin-bottom: 0px;
+}
+
+tr.user-row .phone {
+	width: 217px;
+}
+
+tr.user-row .email {
+	width: 251px;
+}
+
+tr.user-row .name { 
+	width: 193px;
+}
+
+tr.user-row .means {
+	width: 149px;
+}
+
+tr.user-row .availability {
+	width: 129px;
 }

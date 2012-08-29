@@ -15,9 +15,18 @@
 	}
 }
 
-.call_archives
+.buffer
 {
-	padding-top: 100px;
+	padding-top: 46px;
+}
+
+.call_disposition {
+	width: 100%;
+	text-align: left;
+}
+
+.call_disposition span {
+	float: right;
 }
 
 .category

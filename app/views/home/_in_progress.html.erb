@@ -1,9 +1,18 @@
-<table class="table table-bordered table-striped" id="inProgressTable">
+<h1>Call In Progress</h1>
+
+<table class="table table-condensed call-padded" id="inProgressTable">
+	<thead>
+		<tr>
+			<th><span class="icon-calendar"></span> Time </th>
+			<th><span class="icon-hand-right"></span> Caller</th>
+			<th><span class="icon-user"></span> Assignee</th>
+		</tr>
+	</thead>
 	<% in_progress_calls.each do |calling| %>
-	<h3>Call In Progress</h3>
 	<tr>
-		<th>Callback #</th>
-		<td><%= calling.caller %></td>
+		<td> <%= nice_time calling.received_at %></td>
+		<td><%= number_to_phone(calling.caller.gsub(/^1/, '')) %></td>
+		<td><%= calling.user ? (calling.user.name ? calling.user.name : calling.user.email) : "Unassigned" %></td>
 	</tr>
 	<% end %>
 </table>

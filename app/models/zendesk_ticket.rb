@@ -5,7 +5,7 @@ class ZendeskTicket
                 :group_id, :collaborator_ids, :forum_topic_id, 
                 :problem_id, :has_incidents, :due_at, :tags, 
                 :via, :fields, :created_at, :updated_at, :url, 
-                :requester, :comment ]
+                :requester, :comment, :satisfaction_rating ]
                 
   include HTTParty
   
@@ -67,8 +67,24 @@ class ZendeskTicket
   def comments(options={})
     options.merge!(:basic_auth => @@auth, :headers => { 'Content-Type' => 'application/json' })
     response = self.class.get("/tickets/#{id}/audits.json", options)    
-    response['audits'].select { |v| v["events"] }.select { |v| v["events"].detect { |l| l['type'] == "Comment" } }
+    unprepared_comments = response['audits'].select { |v| v["events"] }.select { |v| v["events"].detect { |l| l['type'] == "Comment" } }
+    prepared_comments = []
+    authors = {}
+    
+    unprepared_comments.each do |unprepared_comment|
+      event = unprepared_comment["events"].detect { |v| v["type"] == "Comment" }
+      authors[unprepared_comment["author_id"].to_i] = ZendeskUser.find(unprepared_comment["author_id"]) if not authors.keys.include?(:author_id)
+      
+      prepared_comments << { 
+        :body => event["body"], 
+        :author_id => unprepared_comment["author_id"], 
+        :created_at => unprepared_comment["created_at"] ? Time.parse(unprepared_comment["created_at"]) : nil,
+        :author => authors[unprepared_comment["author_id"].to_i]
+      }
+    end
+    return prepared_comments
   end
+  #@call.zendesk_ticket.comments[0]["events"][0]
   
   def generate_hash
     ticket = {}
@@ -89,6 +105,10 @@ class ZendeskTicket
   def solve!
     self.status = "solved"
     self.save
+  end
+  
+  def self.first
+    all[0]
   end
   
 end

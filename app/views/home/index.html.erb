@@ -1,116 +1,59 @@
+	<div class="home available_agents" style="display: none;">
 
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				<p>Logged in as <%= "#{current_user.email}"%></p>
-				<li class="active">
-					<%= link_to "Home", home_path, :method => :get%>
-				</li>
-				<li>
-					<%= link_to "Call Archive", calls_path, :method => :get%></a>
-				</li>
-				<li>
-					<%= link_to "Agent Settings", users_index_path, :method => :get%></a>
-				</li>
-				<li>
-					<%= link_to "Log Out", destroy_user_session_url, :method => :delete %>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
-<div class="available_agents">
-	
-</div>
-
-<div class="content">
-	<!-- <h1>Levion Automated Telephone System Home Page</h1> -->
-
-	<div id="inprogress" <% if @in_progress_calls.empty? %>style="display: none"<% end %>>
-		<%= render 'in_progress', :in_progress_calls => @in_progress_calls %>
 	</div>
 
-	<div class="agent_activity">
-		<h1>Agent Activity</h1>
-		<table class="table table-striped table-bordered table-condensed call-padded">
-			<tr>
-				<th>Time</th>
-				<th>Agent</th>
-				<th>From</th>
-				<th>Status</th>			
-			</tr>		
-	 		<% @user_activities[0...5].reverse.each do |user_activity| %>
-			<tr id="user_activity_<%= user_activity.id %>">
-				<td><%= user_activity.received_at.localtime.strftime("%d-%b-%Y %I:%M %P") %></td>
-				<td><%= user_activity.user ? user_activity.user.email : "" %></td>
-				<td><%= user_activity.caller %></td>
-				<td><%= user_activity.disposition %></td>
-			</tr>
-			<% end %>
-		</table>
-	</div>
-	
-	<table class="table table-striped table-bordered table-condensed call-padded">
-		<h1>Unresolved Calls</h1>
-		<tr>
-			<th style="width: 5%">Call ID #</th>
-			<th style="width: 15%">Time</th>
-			<th style="width: 10%">Duration</th>
-			<th style="width: 15%">Callback #</th>
-			<th style="width: 10%">Call Status</th>
-			<th style="width: 7%">Disposition</th>
-			<th style="width: 10%">View Call Info</th>
-			<th style="width: 10%">Assigned To</th>			
-		</tr>		
-	 <% @calls.each do |call| %>
-			<tr id="call_<%= call.id %>">
-				<td class="call_table"><%= call.id %></td>
-				<td class="call_table"><%= call.received_at.localtime.strftime("%d-%b-%Y %I:%M %P") %></td>
-				<td class="call_table"><%= "#{call.duration} seconds" %></td>
-				<td class="call_table"><%= call.caller %></td>
-				<td class="call_table"><%= call.status %></td>
-				<td>					
-					<ul class="nav nav-pills">
-					  <li class="dropdown" id="#menu_call_<%= call.id %>">	
-					    <a id="call_<%= call.id %>_disposition" class="dropdown-toggle" data-toggle="dropdown" href="#menu_call_<%= call.id %>">
-					      <%= call.disposition %>
-					      <b class="caret"></b>
-					    </a>
-					    <ul class="dropdown-menu">
-							<% Call::DISPOSITIONS.each do |disposition| %>
-					      <li><%= link_to_function "#{disposition}", "updateStateOfCall(#{call.id}, '#{escape_javascript(disposition)}')" %></li>
-							<% end %>
-					    </ul>
-					  </li>
-					</ul>	
-				</td>
-				<td class="call_table">				
-					<%= link_to "View", call_path(call, :format => :js), { :remote => true } %>
-				</td>
-				<td>
-					<ul class="nav nav-pills">
-						<li class="dropdown" id="#menu_call_<%= call.id %>">
-							<a id="call_<%= call.id %>_assignment" class="dropdown-toggle" data-toggle="dropdown" href="#menu_call_<%= call.id %>">
-						      <%= call.assign_agent(call.user_id) %>
-						      <b class="caret"></b>
-						    </a>
-						    <ul class="dropdown-menu">
-								<% @users.each do |user| %>
-									<li><%= link_to_function "#{user.name}", "updateAssignmentOfCall(#{call.id}, '#{user.id}')" %></li>
+
+	<div class="row-fluid status_screen">
+	  <div class="span12">
+	    <div class="row-fluid">
+	      <div class="span6">
+	      	<div class="agent_activity">
+						<h1>Agent Activity</h1>
+						<table class="table table-condensed call-padded">
+							<thead>
+								<tr class="table-headers">
+									<th><span class="icon-calendar"></span> Time </th>
+									<th><span class="icon-user"></span> Agent </th>
+									<th><span class="icon-hand-right"></span> From </th>
+									<th><span class="icon-tag"></span> Status </th>			
+								</tr>
+							</thead>
+							<tbody>		
+						 		<% @user_activities.each do |user_activity| %>
+								<tr id="user_activity_<%= user_activity.id %>">
+									<td><%= nice_time user_activity.received_at %></td>
+									<td><%= user_activity.user.name ? user_activity.user.name : user_activity.user.email %></td>
+									<td><%= number_to_phone(user_activity.caller.gsub(/^1/, '')) %></td>
+									<td><%= user_activity.disposition %></td>
+								</tr>
 								<% end %>
-						    </ul>
-					  	</li>
-					</ul>
-				</td>
-			</tr>
-			<% end %>
-	</table>
-<%= will_paginate(@calls, :renderer => BootstrapPagination::Rails)%>	
-</div>
+							</tbody>
+						</table>
+					</div>
+	      </div>
+	      <div class="span6">
+	      	<div id="inprogress" class="agent_activity" <% if @in_progress_calls.empty? %>style="display: none"<% end %>>
+						<%= render 'in_progress', :in_progress_calls => @in_progress_calls %>
+					</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div id="unresolved_calls">
+		<%= render 'calls/calls_partial', :title => "Unresolved Calls", :calls => @calls, :call_ref => home_path, :call_update_target => "unresolved_calls" %>
+	</div>
+
 <%= render 'call_modal' %>
 <script>
 refreshTimer = setInterval(function() {
 	checkActivity();
 }, 5000);
+
+$(document).ready(function() {
+	$("#main.container").change(function() {
+		clearInterval(refreshTimer);
+		alert("interval cleared");
+	});
+});
 </script>

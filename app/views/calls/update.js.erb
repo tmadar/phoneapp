@@ -1,2 +1,6 @@
-$("#callModal").html("<%= escape_javascript(render('modal')) %>");
+$("#callModal").html("<%= escape_javascript(render('modal', :call => @call)) %>");
+<% if @call.errors.size > 0 %>
+$("#callModal .modal-body").prepend("<div class=\"alert alert-error\">Uh oh.</div>");
+<% else %>
 $("#callModal .modal-body").prepend("<div class=\"alert alert-success\">You have successfully saved the call record.</div>");
+<% end %>

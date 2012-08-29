@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped" id="comment_<%= comment.id %>" <% if @comment and @call and comment.id == @call.comments.last.id %>style="display: none;"<% end %>>
+<!-- <table class="table table-bordered table-striped" id="comment_<%= comment.id %>" <% if @comment and @call and comment.id == @call.comments.last.id %>style="display: none;"<% end %>>
 	<tr>
 		<th style="width: 30%">Commented By:</th>
 		<td style="width: 70%"> <%= current_user.email %></td>
@@ -11,4 +11,9 @@
 		<th>Time:</th>
 		<td><%= comment.created_at %></td>
 	</tr>
-</table>
+</table> -->
+
+<div id="comment_<%= comment.id %>">
+<legend><% if comment.user %><%= comment.user.display_name %><% else %>Anonymous<% end %> at <%= nice_time(comment.created_at.localtime) %></legend>
+<p><%= comment.body %></p>
+</div>

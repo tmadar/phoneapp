@@ -1,4 +1,10 @@
-<%= form_for(call, :html => { :class => "form-search well" }, :remote => true) do |f|%>
- 	<%= f.text_field :rescheduled_to, { :placeholder => "Enter a time here", :class => "input-medium search-query" } %>
-  <%= f.submit "Reschedule", { :class => "btn" } %>
+<%= form_for(call, :url => call_path(call), :method => :put, :html => { :class => "form-horizontal" }, :remote => true) do |f|%>
+	<div class="control-group form-horizontal">
+		<label class="control-label" for="modal_call_<%= call.id %>_time">Reschedule to... </label>
+		<div class="controls">
+			<%= text_field :call, :rescheduled_to_nice, { :placeholder => "Enter a time here", :class => "input-medium search-query", :id => "modal_call_#{call.id}_time" } %>  <%= f.submit "Reschedule", { :class => "btn" } %>
+		</div>
+	</div>
 <% end %>
+
+

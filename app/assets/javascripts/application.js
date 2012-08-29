@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
@@ -21,25 +22,49 @@ $(function () {
     $('.popover-comment').popover({ html : true });
 });
 
+$(document).ready(function() { 
+	$(".nav li a").click(function() { 
+	
+	site = 	$(this).attr('href');
+	
+	   $.ajax($(this).attr("href") + "?empty=1", {dataType: "html", type: "GET", 
+				success: function(data) { 
+					$("#main.container").html(data); //,
+					// $(location).attr('href', "#"+site),
+					history.pushState(null, null, site);
+					allow_agent_sort();
+				}
+			});
+
+	   return false;
+
+	});
+});
 
 function checkActivity() {
-	$.getJSON('/calls/in_progress.json', function(data) {
-		var items = [];
-		
-		$.each(data, function(key, value) {
-			items.push("<tr id='inProgressRow_" + value.id +"'><td class=\"bolded\">Callback #</td>" + 
-				"<td>" + value.caller + "</td>");
-		});
-				
-		$("#inprogress").html("<h3>Call In Progress</h3>" +
-			"<table class=\"table table-bordered table-striped\" id=\"inProgressTable\">" +
-			items.join('') + "</table>");
+	// $.getJSON('/calls/in_progress.js', function(data) {
+	// 	var items = [];
+	// 	
+	// 	$.each(data, function(key, value) {
+	// 		items.push("<tr id='inProgressRow_" + value.id +"'><td class=\"bolded\">Callback #</td>" + 
+	// 			"<td>" + value.caller + "</td>");
+	// 	});
+	// 			
+	// 	$("#inprogress").html("<h3>Call In Progress</h3>" +
+	// 		"<table class=\"table table-bordered table-striped\" id=\"inProgressTable\">" +
+	// 		items.join('') + "</table>");
+	// 
+	// 	if ($(items).size() == 0) {
+	// 		$("#inprogress").hide();		
+	// 	}
+	// 	else {
+	// 		$("#inprogress").show();
+	// 	}
+	// });
 	
-		if ($(items).size() == 0) {
-			$("#inprogress").hide();		
-		}
-		else {
-			$("#inprogress").show();
-		}
+	$.ajax({
+		url: "/calls/in_progress.js",
+		dataType: "script"
 	});
 }
+

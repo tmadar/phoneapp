@@ -1,2 +1,5 @@
-$("#userModal").html("<%= escape_javascript(render('modal')) %>");
-$("#userModal .modal-body").prepend("<div class=\"alert alert-success\">User information has been updated.</div>");
+// $("#userModal").html("<%= escape_javascript(render('modal')) %>");
+// $("#userModal .modal-body").prepend("<div class=\"alert alert-success\">User information has been updated.</div>");
+$("#main #error-alert").detach();
+$("tr#user_<%= @user.id %>").replaceWith("<%= escape_javascript(render(@user)) %>");
+magic();

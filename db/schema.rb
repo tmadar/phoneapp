@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803224932) do
+ActiveRecord::Schema.define(:version => 20120822002346) do
 
   create_table "agents", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120803224932) do
     t.string   "body",       :default => ""
     t.string   "name",       :default => ""
     t.integer  "call_id"
+    t.integer  "user_id"
   end
 
   add_index "comments", ["call_id"], :name => "index_comments_on_call_id"

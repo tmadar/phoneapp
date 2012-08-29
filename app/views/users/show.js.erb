@@ -1,2 +1,8 @@
-$("#userModal").html("<%= escape_javascript(render('modal', :user => @user)) %>");
-$('#userModal').modal('show');
+// $("#userModal").html("<%= escape_javascript(render('modal', :user => @user)) %>");
+// $('#userModal').modal('show');
+
+// $("tr#user_<%= @user.id %>").html(.html());
+
+user_row = $("tr#user_<%= @user.id %> td");
+new_obj = $("<%= escape_javascript(render(@user)) %>");
+new_obj.find("td").each(function(index) { $(user_row[index]).html($(this).html()) })

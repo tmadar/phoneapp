@@ -1,0 +1,25 @@
+<tr id="user_<%= user.id %>" class="user-row"<% if params[:edit] %>edited="true"<% end %>>
+	<td class="name clickable" id="name_<%= user.id %>"><% if params[:edit] %><%= form_for user do |f| %><%= f.text_field :name %><% end %><% else %><span class="padded-user-column"><%= user.name %></span><% end %></td>
+	<td class="phone clickable" id="phone_<%= user.id %>"><% if params[:edit] %><%= form_for user do |f| %><%= f.text_field :phone %><% end %><% else %><span class="padded-user-column"><%= user.phone %></span><% end %></td>
+	<td class="email clickable" id="email_<%= user.id %>"><% if params[:edit] %><%= form_for user do |f| %><%= f.text_field :email %><% end %><% else %><span class="padded-user-column"><%= user.email %></span><% end %></td>
+	<td class="means">
+		<div class="btn-group">
+			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="user_<%= user.id %>_contact" style="width: 100%; text-align: left;"><%= user.means_of_contact %> <span class="caret" style="float: right"></span></button>
+    <ul class="dropdown-menu">
+		<% User::CONTACT.each do |contact| %>
+      <li><%= link_to_function "#{contact}", "updateContactOfAgent(#{user.id}, '#{escape_javascript(contact)}')" %></li>
+		<% end %>
+		</ul>
+		</div>
+	</td>
+	<td class="availability">
+		<div class="btn-group">
+			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="user_<%= user.id %>_available" style="width: 100%; text-align: left;"><%= user.availability %> <span class="caret" style="float: right"></span></button>
+    <ul class="dropdown-menu">
+			<% User::AVAILABILITY.each do |available| %>
+	      <li><%= link_to_function "#{available}", "updateAvailabilityOfAgent(#{user.id}, '#{escape_javascript(available)}')" %></li>
+		<% end %>
+		</ul>
+		</div>
+	</td>
+</tr>

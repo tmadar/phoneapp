@@ -1,0 +1,42 @@
+	<!-- <table class="table table-clickable table-striped table-bordered call-padded">
+		<h1>Unresolved Calls</h1>
+		<tr>
+			<th style="width: 4%"></th>
+			<th style="width: 14%"><span class="icon-calendar"></span> Time</th>
+			<th style="width: 10%"><span class="icon-signal"></span> Duration</th>
+			<th style="width: 10%"><span class="icon-hand-right"></span> Callback #</th>
+			<th style="width: 10%"><span class="icon-ok-sign"></span> Call Status</th>
+			<th style="width: 7%"><span class="icon-tag"></span> Disposition</th>
+			<th style="width: 17%"><span class="icon-user"></span> Assigned To</th>			
+		</tr>		
+	 <% @calls.each do |call| %>
+			<tr id="call_<%= call.id %>">
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= call.id %></td>
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= call.received_at %></td>
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= "#{call.duration} #{call.duration != 1 ? "seconds" : "second"}" %></td>
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= number_to_phone(call.caller.gsub(/^1/,'')) %></td>
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= call.status.humanize %></td>
+				<td>
+					<div class="btn-group">
+						<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="call_<%= call.id %>_disposition"><%= call.disposition %> <span class="caret"></span></button>
+				    <ul class="dropdown-menu">
+						<% Call::DISPOSITIONS.each do |disposition| %>
+				      <li><%= link_to_function "#{disposition}", "updateStateOfCall(#{call.id}, '#{escape_javascript(disposition)}')" %></li>
+						<% end %>
+				    </ul>
+					</div>
+				</td>
+				<td>
+					<div class="btn-group">
+						<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="call_<%= call.id %>_assignee" style="width: 100%; text-align: left;"><%= call.user ? call.user.name : "- Unassigned - " %> <span class="caret" style="float: right"></span></button>
+				    <ul class="dropdown-menu">
+						<% @users.each do |user| %>
+				      <li><%= link_to_function "#{user.name ? user.name : user.email}", "updateAssignmentOfCall(#{call.id}, '#{user.id}', '#{user.name ? user.name : user.email}')" %></li>
+						<% end %>
+				    </ul>
+					</div>
+				</td>
+			</tr>
+			<% end %>
+	</table>
+<%= will_paginate(@calls, :renderer => BootstrapPagination::Rails)%>	 -->

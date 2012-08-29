@@ -1,0 +1,1 @@
+$("#<%= call_div_id ||= "unresolved_calls" %>").html("<%= escape_javascript(render('calls/calls_partial.html', :title => (title ||= ""), :calls => (calls ||= @calls), :call_ref => (call_ref ||= calls_path), :call_update_target => (call_div_id ||= ""))) %>");

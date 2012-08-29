@@ -1,13 +1,10 @@
-<%= form_for([call, call.comments.build], :remote => true) do |f|%>
-   <div class="name_field">
-     <h5>Name:</h5>
- 	<%= current_user.email %>
-   </div>
-   <div class="comment_field">
- 	<h5>Comment:</h5>
-     <%= f.text_area :body, :cols => 100, :rows =>5 %>
-   </div>
-   <div class="actions">
-     <%= f.submit %>
-   </div>
+<%= form_for([call, call.comments.build], :html => { :class => "form-horizontal", :style => "padding-top: 10px"}, :remote => true) do |f|%>
+
+<%= f.text_area :body, :cols => 100, :rows =>5, :style => "width: 97%" %>
+
+<%= f.button :class => "btn btn-large", :style => "margin-top: 10px" %>
+
 <% end %>
+
+
+

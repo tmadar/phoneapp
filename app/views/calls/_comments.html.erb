@@ -1,4 +1,4 @@
-<% if @call.comments %>
-<h2 class="comment_header">Comments</h2>
+<% if not @call.comments.empty? %>
+<h3>Comments</h3>
 <%= render @call.comments %>
 <% end %>

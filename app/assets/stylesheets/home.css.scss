@@ -1,50 +1,28 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.content {
-  padding: 20px;
-	text-align: center;
-  margin: 0 auto; /* negative indent the amount of the padding to maintain the grid system */
-  -webkit-border-radius: 0 0 6px 6px;
-  -moz-border-radius: 0 0 6px 6px;
-  border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  box-shadow: 0 1px 2px rgba(0,0,0,.15);
-	.table
-	{
-		th, td, tr
-		{
-			text-align: center;
-		}
-		
-		td
-		{
-			.info
-			{
-				padding-top: 40px;
-			}
-		}
-		
-		
-	}
-	
-	h1
-	{
-		font-weight: bold;
-	}
-	
-	.call_table
-	{
-		padding-top: 12px;
-	}
-	
-	
-
-}
-
 
 .call-padded, .agent_activity{
 	margin-top: 50px;
 	margin-bottom: 30px;
+}
+
+.buffer {
+	margin-top: 50px;
+}
+.agent_activity, #unresolved_calls, #inprogress, #all_calls, #users, .user-settings
+{
+	border: 1px solid #CCC;
+	-webkit-box-shadow: inset 0 1px 0 #EEE,white 0 1px 0;
+	box-shadow: inset 0 1px 0 #EEE,white 0 1px 0;
+	padding: 10px 12px;
+	border-bottom: 1px solid #E2E2E2;
+	background-color: white;
+	border-radius: 15px;
+	opacity:.9;
+}
+
+body
+{	
+	background-image: url('http://lukemcreynolds.com/files/wallpaper/Ggb_by_night.jpg');
 }

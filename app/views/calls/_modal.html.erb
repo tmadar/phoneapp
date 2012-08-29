@@ -1,75 +1,77 @@
-<div id="show">
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h3>
+		Call Information (#<%= call.id %>)
+	</h3>
+</div>
+<div class="modal-body">
 	
-	<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-	<table class="table table-bordered table-condensed table-striped call-padded">
-		<h3>Call Information (#<%= call.id %>)</h3>
-  </div>
-  <div class="modal-body">
 	
+	<table class="table table-bordered table-condensed table-striped">
 		<tr>
-			<td class="category">Call ID #</td>
-			<td><%= call.id %></td>
+			<th>Received</th>
+			<th>Callback #</th>
+			<th>Duration</th>
+			<th>Status</th>
 		</tr>
 		<tr>
-			<td class="category">Time of Call</td>
-			<td><%= call.received_at %></td>
-		</tr>
-		<tr>
-			<td class="category">Callback #</td>
-			<td><%= call.caller %></td>
-		</tr>
-		<tr>
-			<td class="category">Duration</td>
-			<td><%= "#{call.duration} seconds" %></td>
-		</tr>
-		<tr>
-			<td class="category">Call Status</td>
-			<td><%= call.status %></td>
-		</tr>
-		<tr>
-			<td class="category">Disposition</td>
-			<td><%= call.disposition %></td>
-		</tr>
-		<tr>
-			<td class="category">Assigned To</td>
-			<td><%= call.assign_agent(call.user_id) %></td>
-		</tr>
-		<tr>
-			<td class="category">Reschedule Time</td>
-			<td>
-				<%= render 'time', :call => call %>
-			</td>
-		</tr>
-		<tr>
-			<td class="category">Audio Message</td>
-			<td>
-				<%= call.check_recording(call)%>
-			</td>
-		</tr>
-		<tr>
-			<td class="category">Zendesk Ticket</td>
-			<td>
-				<%= link_to "Zendesk Ticket", call.zendesk_call_string(call.zendesk_id)%>
-			</td>
-		</tr>
-		<tr>
-			<td class="category">Last Comment</td>
-			<td><%= call.last_comment%></td>
+			<td><%= nice_time call.received_at %></td>
+			<td><%= number_to_phone(call.caller.gsub(/^1/, "")) %></td>
+			<td><%= call.duration %> seconds</td>
+			<td><%= call.status.humanize %></td>
 		</tr>
 	</table>
+	
+
+	
+	<div class="control-group form-horizontal">
+		<label class="control-label" for="modal_call_<%= call.id %>_disposition">Status</label>
+		<div class="controls">
+			<div class="btn-group">
+				<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="modal_call_<%= call.id %>_disposition"><%= call.disposition %> <span class="caret"></span></button>
+		    <ul class="dropdown-menu">
+				<% Call::DISPOSITIONS.each do |disposition| %>
+		      <li><%= link_to_function "#{disposition}", "modalUpdateStateOfCall(#{call.id}, '#{escape_javascript(disposition)}')" %></li>
+				<% end %>
+		    </ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group form-horizontal">
+		<label class="control-label" for="modal_call_<%= call.id %>_assignee">Assignee</label>
+		<div class="controls">
+			<div class="btn-group">
+				<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="modal_call_<%= call.id %>_assignee" style="width: 100%; text-align: left;"><%= call.user ? (call.user.name ? call.user.name : call.user.email) : "- Unassigned - " %> <span class="caret" style="float: right"></span></button>
+		    <ul class="dropdown-menu">
+				<% @users.each do |user| %>
+		      <li><%= link_to_function "#{user.name ? user.name : user.email}", "updateAssignmentOfCall(#{call.id}, '#{user.id}', '#{user.name ? user.name : user.email}')" %></li>
+				<% end %>
+		    </ul>
+			</div>
+		</div>
+	</div>
+
+	<%= render 'time', :call => @call %>
+
+  <div class="control-group form-horizontal">
+		<div class="controls">
+			<% if @call.recording? %>
+				<%= link_to "<span class=\"icon-play\"></span> Play Recording".html_safe, @call.recording, { :class => "btn btn-large", :type => "button" } %>
+			<% end %>
+			<% if @call.zendesk_id %>
+				<%= link_to "<span class=\"icon-share-alt\"></span>  Open Ticket".html_safe, @call.zendesk_ticket_url, { :class => "btn btn-large", :type => "button" } %>
+			<% end %>
+		</div>
+	</div>
 	
 	<div id="comments">
 		<%= render 'comments', :call => call %>
 	</div>
-	<div class="new_comment">
-		<h2>Add a Comment</h2>
-			<%= render 'form', :call => call %>
-	</div>
 	
-	<div class="modal-footer">
-    <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
-  </div>
+	<%= render 'form', :call => call %>
 
 </div>
+<div class="modal-footer">
+	<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
 </div>

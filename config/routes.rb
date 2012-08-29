@@ -16,19 +16,30 @@ Phoneapp::Application.routes.draw do
 
   get "users/index"
   
-  get "records/index"
-  
   get "calls/index"
-
-  devise_for :users
   
-  # resources :records do
-  #   get :calls, :on => :member
-  # end
+  
+
+  devise_for :users 
+  
+  resources :users do
+    collection do
+      get 'sync_with_zendesk'
+      post 'sync_with_zendesk'
+      get 'sync_with_app'
+      post 'sync_with_app'
+      get 'prioritize'
+      post 'prioritize'
+      get 'search'
+      post 'search'
+    end
+  end
+  
   
   resources :calls do
     collection do
       get 'in_progress'
+      get 'unresolved'
     end
     
     resources :comments
@@ -36,9 +47,11 @@ Phoneapp::Application.routes.draw do
   
   resources :systems
   
-  resources :users
+  resources :users, :path => '#/users/index'
   
   resources :zendesk_tickets
+  
+  resources :user_syncr
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
