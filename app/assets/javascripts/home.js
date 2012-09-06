@@ -44,6 +44,11 @@ function updateAssignmentOfCall(call_id, new_user, full_name) {
 
 
 function refreshCalls() {
-	$.ajax({url: $("[call-ref]").attr("call-ref"), data: { call_div_id: $("[call-ref]").attr("call-update-target"), page: $("[call-ref]").attr("page"), title: $("[call-ref]").parent().find("h1").text() }, dataType: "script"});
+	$.ajax({url: $("[call-ref]").attr("call-ref"), data: { 
+			sort_by: function() {
+				th = $("th[sorted]").first();
+				return ($(th).attr("column-name") ? $(th).attr("column-name") : $(th).attr("id"));
+			}, 
+			direction: ($("th[sorted]").first().attr("sorted")), call_div_id: $("[call-ref]").attr("call-update-target"), page: $("[call-ref]").attr("page"), title: $("[call-ref]").parent().find("h1").text() }, dataType: "script"});
 }
 

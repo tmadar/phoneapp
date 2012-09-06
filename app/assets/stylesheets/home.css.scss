@@ -17,12 +17,21 @@
 	box-shadow: inset 0 1px 0 #EEE,white 0 1px 0;
 	padding: 10px 12px;
 	border-bottom: 1px solid #E2E2E2;
-	background-color: white;
-	border-radius: 15px;
+	background-color: black;
+	border-radius: 30px;
 	opacity:.9;
+	color:white;
 }
 
 body
-{	
-	background-image: url('http://lukemcreynolds.com/files/wallpaper/Ggb_by_night.jpg');
+{
+		background: url("http://www.americapictures.net/wp-content/uploads/2012/05/Las-Vegas-Strip-Night-Light-Cityscape-United-States.jpg") no-repeat center center fixed; 
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+}
+
+.agent-table tbody tr:hover td {
+		color: black;
 }

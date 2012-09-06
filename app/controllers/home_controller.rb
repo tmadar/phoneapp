@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     @in_progress_calls = Call.in_progress
     @users = User.all
     respond_to do |format|
-      format.html { render :layout => "#{params[:empty] ? "empty" : "application"}"}
+      format.html { render :layout => "#{@empty ? "empty" : "application"}"}
       format.js
     end
   end

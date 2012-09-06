@@ -2,8 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
+#users
+{
+	border-radius: 0px;
+}
 .call-padded {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -37,9 +39,9 @@
 	margin-top: 46px;
 }
 
-.user_available span
+.caret
 {
-	
+	float:right;
 }
 
 tr.user_row {

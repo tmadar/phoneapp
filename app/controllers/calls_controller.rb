@@ -8,11 +8,12 @@ class CallsController < ApplicationController
   
   #shows the comprehensive list of calls
   def index
-    @calls = Call.paginate page: params[:page], order: 'created_at desc', per_page: 10
+    @calls = Call.rsend(*sort_order_for_calls).paginate page: params[:page], per_page: 10
     respond_to do |format|
-      format.html { render :layout => "#{params[:empty] ? "empty" : "application"}"}
+      format.html { render :layout => "#{@empty ? "empty" : "application"}"}
       format.js
       format.xml { render 'index.xml.builder' }
+      format.json
     end
   end
   
@@ -57,5 +58,20 @@ class CallsController < ApplicationController
       format.js
     end
   end
+  
+  def sort_order_for_calls
+    if Call.column_names.include?(params[:sort_by])
+      if params[:sort_by] == "caller"
+        return [[:order, "replace(replace(replace(#{params[:sort_by]}, '-', ''), '+1', ''), '+', '') #{params[:direction] == "1" ? "asc" : "desc"}"]]
+      elsif params[:sort_by] == "user_id"
+        return [[:joins, "LEFT OUTER JOIN users on calls.user_id = users.id"], [:order, "users.name #{params[:direction] == "1" ? "asc" : "desc"}"]]
+      else
+        return [[:order, "#{params[:sort_by]} #{params[:direction] == "1" ? "asc" : "desc"}"]]
+      end
+    else
+      return [[:order, "created_at desc"]]
+    end
+  end
+  
     
 end

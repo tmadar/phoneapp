@@ -54,6 +54,7 @@ class Call < ActiveRecord::Base
   include HomeHelper
   
   DISPOSITIONS = ["Open", "Closed"]
+  RINGCENTRAL_STATES = [ "queued", "ringing", "in-progress", "completed", "failed", "busy" "no-answer" ]
   DISPOSITION_MAPPINGS = { "Open" => "open", "Closed" => "solved" }
 
   attr_accessible :caller, :received_at, :duration, :twilio_call_sid,
@@ -67,6 +68,11 @@ class Call < ActiveRecord::Base
   
   before_save :toggle_update
   after_save :update_zendesk_ticket
+  
+  validates :caller, :presence => true 
+  validates :disposition, :inclusion => { :in => DISPOSITIONS }, :presence => true
+  validates :status, :inclusion => { :in => RINGCENTRAL_STATES }, :presence => true
+  
   
   #A Call object will be created and given params from Twilio.
   #If a customer calls, a zendesk ticket will be created.

@@ -1,3 +1,5 @@
+<div class="call-partial">
+	
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">×</button>
 	<h3>
@@ -28,7 +30,7 @@
 		<label class="control-label" for="modal_call_<%= call.id %>_disposition">Status</label>
 		<div class="controls">
 			<div class="btn-group">
-				<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="modal_call_<%= call.id %>_disposition"><%= call.disposition %> <span class="caret"></span></button>
+				<button class="btn btn-small dropdown-toggle" data-toggle="dropdown" id="modal_call_<%= call.id %>_disposition" style="width: 50%; text-align: left;"><%= call.disposition %> <span class="caret"></span></button>
 		    <ul class="dropdown-menu">
 				<% Call::DISPOSITIONS.each do |disposition| %>
 		      <li><%= link_to_function "#{disposition}", "modalUpdateStateOfCall(#{call.id}, '#{escape_javascript(disposition)}')" %></li>
@@ -74,4 +76,6 @@
 </div>
 <div class="modal-footer">
 	<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+</div>
+
 </div>

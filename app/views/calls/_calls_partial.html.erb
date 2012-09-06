@@ -1,21 +1,22 @@
-	<table class="table call-padded" call-ref="<%= call_ref ||= calls_path %>" call-update-target="<%= call_update_target ||= "" %>" <% if params[:page] %>page="<%= params[:page] %>"<% end %>>
+	<table class="table call-padded table-clickable" call-ref="<%= call_ref ||= calls_path %>" call-update-target="<%= call_update_target ||= "" %>" <% if params[:page] %>page="<%= params[:page] %>"<% end %>>
 		<h1><%= title ||= "No title defined" %></h1>
 		<thead>
 			<tr>
-				<th style="width: 14%"><span class="icon-calendar"></span> Time</th>
-				<th style="width: 10%"><span class="icon-signal"></span> Duration</th>
-				<th style="width: 14%"><span class="icon-hand-right"></span> Callback #</th>
-				<th style="width: 10%"><span class="icon-ok-sign"></span> Call Status</th>
-				<th style="width: 7%"><span class="icon-tag"></span> Disposition</th>
-				<th style="width: 17%"><span class="icon-user"></span> Assigned To</th>			
+				<th class="sort-header" id="time" column-name="received_at" style="width: 15%" <%= th_sort_modifier("received_at").html_safe %>><span class="icon-calendar"></span> Time<%= th_span_modifier("received_at").html_safe %></th>
+				<th class="sort-header" id="duration" style="width: 16%" <%= th_sort_modifier("duration").html_safe %>><span class="icon-signal"></span> Duration <%= th_span_modifier("duration").html_safe %></th>
+				<th class="sort-header" id="phone" column-name="caller" style="width: 18%" <%= th_sort_modifier("caller").html_safe %>><span class="icon-hand-right"></span> Callback #<%= th_span_modifier("caller").html_safe %></th>
+				<th class="sort-header" id="status" style="width: 16%" <%= th_sort_modifier("status").html_safe %>><span class="icon-ok-sign" ></span> Call Status <%= th_span_modifier("status").html_safe %></th>
+				<th class="sort-header" id="disposition" style="width: 16%" <%= th_sort_modifier("disposition").html_safe %>><span class="icon-tag"></span> Disposition <%= th_span_modifier("disposition").html_safe %></th>
+				<th class="sort-header" id="assign" column-name="user_id" style="width: 19%" <%= th_sort_modifier("user_id").html_safe %>><span class="icon-user"></span> Assigned To <%= th_span_modifier("user_id").html_safe %></th>			
 			</tr>
-		</thead>	
+		</thead>
+		<tbody>	
 	 <% calls.each do |call| %>
 			<tr id="call_<%= call.id %>">
 				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= nice_time(call.received_at) %></td>
 				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= "#{call.duration} #{call.duration != 1 ? "seconds" : "second"}" %></td>
 				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= number_to_phone(call.caller.gsub(/^1/,'')) %></td>
-				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= call.status.humanize %></td>
+				<td class="call_table" onclick="displayCall(<%= call.id %>)"><%= call.status.humanize if call.status %></td>
 				<td>
 					<div class="btn-group">
 						<button class="btn btn-small dropdown-toggle call_disposition" data-toggle="dropdown" id="call_<%= call.id %>_disposition"><%= call.disposition %> <span class="caret"></span></button>
@@ -38,11 +39,12 @@
 				</td>
 			</tr>
 			<% end %>
+			</tbody>
 	</table>
 <%= will_paginate(calls, { :renderer => BootstrapPagination::Rails, :extra_attributes => { "data-remote" => true }, :call_div_id => call_ref }) %>	
 
 <script>
-$(document).ready(function() { 
-	$('.pagination a').attr('data-remote', 'true');
-});
+// $(document).ready(function() { 
+// 	$('.pagination a').attr('data-remote', 'true');
+// });
 </script>

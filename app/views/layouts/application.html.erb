@@ -15,17 +15,18 @@
 				<a class="brand"><%= self.current_user ? "#{self.current_user.name ? self.current_user.name + " (" : "" }#{self.current_user.email}"+ "#{self.current_user.name ? ")" : "" }" : "Call Center" %></a>
 					<ul class="nav">
 						<li>
-							<%= link_to "Home", home_path %>
+							<%= link_to image_tag("https://lh3.googleusercontent.com/vym6jXXvf10HnOxkX4xA72pMvxEOsXOgOL-iKfzBL9UCa32Zig_MEhSHbZM-I8r4sbYIcPst%3Ds20-h20-e365"), home_path %>
 						</li>
 						<li>
 							<%= link_to "Call Archive", calls_path %></a>
 						</li>
 						<li>
-							<%= link_to "Agent Settings", users_index_path %></a>
+							<%= link_to " Agent Settings", users_index_path %></a>
 						</li>
 						<li>
-							<%= link_to "Log Out", destroy_user_session_url, :method => :delete %>
+							<%= link_to "Log Out", destroy_user_session_url, :method => :delete, :class => "no_ajax" %>
 						</li>
+						<%= render "layouts/search"%>
 					</ul>
 				</div>
 		</div>

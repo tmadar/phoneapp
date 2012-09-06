@@ -13,6 +13,10 @@ function updateContactOfAgent(user_id, new_state) {
 
 function updateAvailabilityOfAgent(user_id, new_state) {
 	user_url = "/users/" + user_id + ".json"
+	
+	phone = $("#phone_"+user_id).text();
+	
+
 	request = $.ajax({
 		url: user_url,
 		type: 'PUT',
@@ -22,6 +26,7 @@ function updateAvailabilityOfAgent(user_id, new_state) {
 			$("#user_" + user_id + "_available").html(new_state + ' <span class="caret"></span>');
 		}
 	});
+
 }
 
 $(function() {

@@ -1,13 +1,12 @@
 <div class="user-settings">
 <h1 class="agent_header">Agent Settings</h1>
 
-	<table id="users" class="table call-padded">
+	<table id="users" class="table call-padded table-clickable">
 		<thead>
 			<tr>
 				<th class="name"><span class="icon-user"></span> Name</th>
 				<th class="phone"><span class="icon-hand-right"></span> Callback #</th>
 				<th class="email"><span class="icon-envelope"></span> Email</th>
-				<th class="means"><span class="icon-comment"></span> Means of Contact</th>
 				<th class="availability"><span class="icon-flag"></span> Available</th>
 			</tr>
 		</thead>
@@ -21,9 +20,13 @@
 	</table>	
 	
 	<div class="sync_users">
-		<%= button_to "Sync App With Zendesk", sync_with_zendesk_users_path, :class => "btn btn-danger", :confirm => 'Are you sure?' %>
+		<%= button_to "Sync App With Zendesk", sync_with_zendesk_users_path, :class => "btn btn-danger", :confirm => 'Are you sure you want to remove users?' %>
 	</div>
 </div>
 
 
 <%= render 'edit_modal' %>
+
+<script>
+	allow_agent_sort();
+</script>

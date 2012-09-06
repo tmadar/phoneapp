@@ -22,25 +22,34 @@ $(function () {
     $('.popover-comment').popover({ html : true });
 });
 
-$(document).ready(function() { 
-	$(".nav li a").click(function() { 
+$(document).ready(function(){
 	
-	site = 	$(this).attr('href');
+	history.replaceState({container: $("#main.container").html() }, null, document.location.href);
 	
-	   $.ajax($(this).attr("href") + "?empty=1", {dataType: "html", type: "GET", 
-				success: function(data) { 
-					$("#main.container").html(data); //,
-					// $(location).attr('href', "#"+site),
-					history.pushState(null, null, site);
-					allow_agent_sort();
-				}
-			});
-
-	   return false;
-
+	$("a:not('.no_ajax'),").live('click', function() { 
+		site = 	$(this).attr('href');
+		queryString = parseQueryString(site);
+		queryString.empty = "true";
+		
+		$.ajax($(this).attr("href"), {dataType: "html", type: "GET", data: queryString,
+			success: function(data) { 
+				$("#main.container").html(data); //,
+				// $(location).attr('href', "#"+site),
+				history.pushState({container: $("#main.container").html() }, null, site);
+			}
+		});
+		return false;
+	});
+		
+	$(window).bind('popstate', function(event) {
+    // if the event has our history data on it, load the page fragment with AJAX
+    var state = event.originalEvent.state;
+    if (state) {
+        // container.load(state.path);
+			$("#main.container").html(state.container);
+    }
 	});
 });
-
 function checkActivity() {
 	// $.getJSON('/calls/in_progress.js', function(data) {
 	// 	var items = [];
@@ -67,4 +76,53 @@ function checkActivity() {
 		dataType: "script"
 	});
 }
+$(document).ready(function() { 
+	sortingColumns();	
+});
+
+$(document).ready(function(){
+	
+	$("#to").autocomplete({
+			source: function(req, add){
+				if(add.size == 1)
+				{
+					$.ajax({
+						url: "/searches"
+					});
+				}
+				else if (add.size > 1)
+				{
+
+				}
+
+				$.getJSON("calls.js", req, function(data){
+					var suggestions = [];
+
+					$.each(data, function(i,val){
+						suggestions.push(val.name);
+					});
+
+					add(suggestions);
+				});
+			}
+	});
+	
+});
+
+
+function repaintPage(val) {
+	
+}
+
+function parseQueryString(text) {
+  var nvpair = {};
+  var qs = text.replace(/^.+\?/, '');
+  var pairs = qs.split('&');
+  $.each(pairs, function(i, v){
+    var pair = v.split('=');
+    nvpair[pair[0]] = pair[1];
+  });
+  return nvpair;
+}
+
 

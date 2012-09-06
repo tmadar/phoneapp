@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
                   :phone, :priority, :availability, :means_of_contact, :admin
   
   has_many :calls
+  
 
   #Toggle method which allows an agent to switch their availability
   #status when calling in

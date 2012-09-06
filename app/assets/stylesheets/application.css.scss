@@ -12,6 +12,10 @@
  *= require_tree .
  */
 
+#main
+{
+	width:800px;
+}
 #sign_in, #forgot_pass, #sign_up, .new_comment, .new_user, .info
 {
   text-align: center;
@@ -37,9 +41,13 @@
 }
 
 .table-clickable tbody tr:hover td {
-  background-color: #08C;
-	color: white;
+
+	color: black;
 	cursor: pointer;
+}
+
+.navbar-search .search-query {
+	margin-left: 20px;
 }
 
 tr.user-row {
@@ -627,3 +635,22 @@ body > .navbar .brand:hover {
 .navbar-inverse .btn-navbar.active {
   background-color: #000000 \9;
 }
+
+th .caret {
+	border-top: 4px solid white;
+}
+
+th .caret {
+	margin-left: 5px;
+	margin-top: 8px;
+	float: none;
+}
+
+th .up {
+	border-top: 0;
+	border-bottom: 4px solid white;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	content: "";
+}
+

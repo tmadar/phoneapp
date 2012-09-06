@@ -1,5 +1,7 @@
 Phoneapp::Application.routes.draw do
   
+  get "search/index"
+
   resource :call_handler do
     member do
       get 'update_number'

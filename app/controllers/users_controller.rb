@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     @users = User.order(:priority)
     respond_to do |format|
-      format.html { render :layout => "#{params[:empty] ? "empty" : "application"}"}
+      format.html { render :layout => "#{@empty ? "empty" : "application"}"}
       format.js
       format.json  { render :json => @users }
     end
